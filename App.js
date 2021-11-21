@@ -72,7 +72,10 @@ export default function App() {
             }}
             name="hearto"
           />
-          <Image style={styles.images} source={require("/assets/women winter.jpg")} />
+          <Image
+            style={styles.images}
+            source= {require("./assets/logo.jpg")}
+          />
         </View>
       </View>
 
@@ -99,8 +102,6 @@ export default function App() {
           </View>
         </View>
       </View>
-
-    
 
       <View style={styles.fiveview}>
         <Text
