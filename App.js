@@ -74,14 +74,14 @@ export default function App() {
           />
           <Image
             style={styles.images}
-            source= {require("./assets/logo.jpg")}
+            source= {require("./assets/jacket2.jpg")}
           />
         </View>
       </View>
 
       <View style={styles.thirdview}>
         <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
-          Women Winter Jacket
+          Men Winter Jacket
         </Text>
         <View style={styles.review}>
           <Text
@@ -98,7 +98,7 @@ export default function App() {
             <IconAntDesign style={styles.staricon} name="star" />
             <IconAntDesign style={styles.staricon} name="star" />
             <IconAntDesign style={styles.staricon} name="star" />
-            <IconAntDesign style={styles.staricon} name="star" />
+           
           </View>
         </View>
       </View>
@@ -133,7 +133,7 @@ export default function App() {
           <View style={styles.amount}>
             <Text style={{ fontSize: 10, color: "white" }}>Total Amount</Text>
             <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
-              $110
+              $97
             </Text>
           </View>
           <TouchableOpacity style={styles.addtocartbtn}>
@@ -194,9 +194,10 @@ const styles = StyleSheet.create({
   images: {
     position: "absolute",
     alignSelf: "center",
-    top: -10,
+    top: -11,
     height: 280,
     width: 230,
+    marginTop:10,
   },
   review: {
     flexDirection: "row",
