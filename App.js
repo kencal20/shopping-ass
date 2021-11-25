@@ -1,18 +1,77 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import {
+  FlatList,
+  SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
-  SafeAreaView,
   View,
-  Image,
   TouchableOpacity,
+  TextInput,
+  Image,
 } from "react-native";
+import IconAntDesign from "react-native-vector-icons/AntDesign";
 import IconFontAwesome from "react-native-vector-icons/FontAwesome";
 import IconMaterialIcons from "react-native-vector-icons/MaterialIcons";
-import IconAntDesign from "react-native-vector-icons/AntDesign";
 
-export default function App() {
+const DATA = [
+  {
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    price: "$99",
+    title: "Military Coloured Jacket",
+    img: require("./assets/jacket1.jpg"),
+  },
+  {
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    price: "$170",
+    title: "Black and white leather Jackets",
+    img: require("./assets/jacket3.jpg"),
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    price: "$98",
+    title: "Men winter jacket",
+    img: require("./assets/jacket2.jpg"),
+  },
+];
+
+const Item = ({ item, onPress }) => (
+  <TouchableOpacity onPress={onPress} style={styles.item}>
+    <View
+      style={{
+        flex: 1,
+        height: 110,
+        backgroundColor: "#fff",
+        position: "relative",
+        borderRadius: 20,
+        borderBottomStartRadius: 70,
+      }}
+    >
+      <Image style={styles.images} source={item.img} />
+    </View>
+    <View style={{ flex: 1.5, marginTop: 20, marginHorizontal: 20 }}>
+      <Text style={styles.title}>{item.title}</Text>
+      <View style={styles.stars}>
+        <IconAntDesign style={styles.staricon} name="star" />
+        <IconAntDesign style={styles.staricon} name="star" />
+        <IconAntDesign style={styles.staricon} name="star" />
+        <IconAntDesign style={styles.staricon} name="star" />
+        <IconAntDesign style={styles.staricon} name="star" />
+      </View>
+      <Text style={{ fontSize: 20, fontWeight: "bold", color: "#9E91EB" }}>
+        {item.price}
+      </Text>
+    </View>
+  </TouchableOpacity>
+);
+
+const App = () => {
+  const [selectedId, setSelectedId] = useState(null);
+
+  const renderItem = ({ item }) => {
+    return <Item item={item} onPress={() => setSelectedId(item.id)} />;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.firstview}>
@@ -22,7 +81,6 @@ export default function App() {
             position: "absolute",
             alignSelf: "center",
             padding: 15,
-            elevation: 5,
             borderRadius: 100,
             backgroundColor: "#fff",
           }}
@@ -37,7 +95,6 @@ export default function App() {
             alignSelf: "center",
             padding: 15,
             borderRadius: 100,
-            elevation: 5,
             textAlign: "right",
             backgroundColor: "#fff",
           }}
@@ -46,198 +103,97 @@ export default function App() {
       </View>
 
       <View style={styles.secondview}>
-        <View
-          style={{
-            height: 290,
-            backgroundColor: "#fff",
-            position: "relative",
-            marginHorizontal: 30,
-            borderBottomRightRadius: 20,
-            borderBottomStartRadius: 120,
-          }}
-        >
-          <IconAntDesign
-            style={{
-              color: "#9E91EB",
-              fontSize: 20,
-              position: "absolute",
-              right: -10,
-              top: 15,
-              alignSelf: "center",
-              padding: 15,
-              borderRadius: 100,
-              textAlign: "right",
-              elevation: 5,
-              backgroundColor: "#fff",
-            }}
-            name="hearto"
-          />
-          <Image
-            style={styles.images}
-            source= {require("./assets/jacket2.jpg")}
-          />
-        </View>
+        <Text style={{ fontSize: 25, fontWeight: "bold" }}>Men Jacket</Text>
       </View>
 
       <View style={styles.thirdview}>
-        <Text style={{ fontSize: 20, fontWeight: "bold", margin: 10 }}>
-          Men Winter Jacket
-        </Text>
-        <View style={styles.review}>
+        <View style={styles.searchbtn}>
+          <TextInput style={{ fontSize: 13, color: "silver" }}>
+            Search Jacket
+          </TextInput>
           <Text
             style={{
-              borderBottomWidth: 4,
-              borderBottomColor: "#9E91EB",
-              paddingBottom: 20,
+              position: "absolute",
+              right: 20,
+              top: 20,
+              color: "#9E91EB",
             }}
           >
-            Review |
+            Filter
           </Text>
-          <View style={{ flexDirection: "row", margin: 4 }}>
-            <IconAntDesign style={styles.staricon} name="star" />
-            <IconAntDesign style={styles.staricon} name="star" />
-            <IconAntDesign style={styles.staricon} name="star" />
-            <IconAntDesign style={styles.staricon} name="star" />
-            <IconAntDesign style={styles.staricon} name="star" />
-          </View>
         </View>
       </View>
 
-      <View style={styles.fiveview}>
-        <Text
-          style={{
-            fontSize: 15,
-            color: "#9E91EB",
-            paddingHorizontal: 30,
-            backgroundColor: "white",
-            paddingVertical: 20,
-            marginRight: 60,
-            borderTopRightRadius: 40,
-            borderBottomRightRadius: 40,
-          }}
-        >
-          Material: 91% polyester, 9% elastane
-        </Text>
+      <View style={styles.forthview}>
+        <FlatList
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          extraData={selectedId}
+        />
       </View>
-
-      <View style={styles.sixview}>
-        <Text style={styles.sizes}>XS</Text>
-        <Text style={styles.sizes}>S</Text>
-        <Text style={[styles.sizes, styles.activesize]}>M</Text>
-        <Text style={styles.sizes}>L</Text>
-        <Text style={styles.sizes}>XL</Text>
-      </View>
-
-      <View style={styles.sevenview}>
-        <View style={styles.addtocart}>
-          <View style={styles.amount}>
-            <Text style={{ fontSize: 10, color: "white" }}>Total Amount</Text>
-            <Text style={{ fontSize: 25, color: "white", fontWeight: "bold" }}>
-              $98
-            </Text>
-          </View>
-          <TouchableOpacity style={styles.addtocartbtn}>
-            <Text
-              style={{
-                alignSelf: "center",
-                color: "white",
-                fontWeight: "bold",
-              }}
-            >
-              Add to Cart
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <StatusBar style="auto" />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    paddingHorizontal: 20,
     backgroundColor: "#E6E6E7",
-    marginTop: 30,
   },
   firstview: {
     flex: 1,
-    marginHorizontal: 20,
-    marginVertical: 5,
     position: "relative",
     flexDirection: "row",
   },
   secondview: {
-    flex: 6,
-  },
-  thirdview: {
-    flex: 2,
-    marginHorizontal: 20,
-  },
-  forthview: {
-    flex: 1.5,
-    marginHorizontal: 20,
-  },
-  fiveview: {
-    flex: 1.5,
+    flex: 1,
     justifyContent: "center",
   },
-  sixview: {
-    flex: 1.5,
-    marginHorizontal: 20,
-    flexDirection: "row",
+  thirdview: {
+    flex: 1,
+    justifyContent: "center",
   },
-  sevenview: {
-    flex: 2,
-    marginHorizontal: 20,
+  forthview: {
+    flex: 7,
+    marginTop: 20,
+  },
+  searchbtn: {
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderRadius: 15,
+  },
+  item: {
+    flexDirection: "row",
+    marginVertical: 20,
   },
   images: {
     position: "absolute",
-    alignSelf: "center",
-    top: -10,
-    height: 280,
-    width: 230,
-    marginTop:22,
-    borderRadius:100,
+    top: -20,
+    left: 10,
+    height: 100,
+    width: 100,
+    marginLeft: 20,
+    marginTop: 21,
+    borderRadius: 90,
   },
-  review: {
-    flexDirection: "row",
-    marginHorizontal: 10,
-  },
-  staricon: {
-    color: "gold",
-  },
-  sizes: {
-    margin: 10,
-    marginVertical: 15,
-    padding: 12,
-    backgroundColor: "white",
-    borderRadius: 5,
+  title: {
+    fontSize: 15,
     color: "black",
   },
-  activesize: {
-    backgroundColor: "#9E91EB",
-    color: "#fff",
-  },
-  addtocart: {
-    flex: 1,
+  stars: {
     flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: "#9E91EB",
-    margin: 10,
-    borderRadius: 20,
+    marginVertical: 5,
+    marginBottom: 15,
   },
-  amount: {
-    flex: 1,
-    justifyContent: "center",
-    marginLeft: 20,
-  },
-  addtocartbtn: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "flex-end",
-    backgroundColor: "#806FE1",
-    margin: 20,
-    borderRadius: 10,
+  staricon: {
+    fontSize: 15,
+    color: "gold",
   },
 });
+
+export default App;
